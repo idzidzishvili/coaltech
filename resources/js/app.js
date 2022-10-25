@@ -1,3 +1,3 @@
 require('./bootstrap');
+require('./bootstrap-multiselect.min');
 
-$('.test').html('sdlfkjsldkfjsdlk')
