@@ -3,9 +3,9 @@
 @section('content')
 
    <div class="container-fluid">
-      <div class="row mb-2">
+      <div class="row py-3">
          <div class="col-12">
-            <h2 class="m-0"> {{$action.' '.$resource}}</h2>
+            <h2 class="m-0"> {{'Add '.$resource}}</h2>
          </div>
       </div>
 

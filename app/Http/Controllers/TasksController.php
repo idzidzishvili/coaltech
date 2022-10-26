@@ -11,7 +11,7 @@ class TasksController extends Controller
 
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::orderBy('priority', 'asc')->orderBy('updated_at', 'asc')->get();
 		return view('tasks', ['tasks' => $tasks]);
     }
 
@@ -19,7 +19,7 @@ class TasksController extends Controller
     public function create()
     {
         $task = new Task();
-		return view('add', ['action' => 'Add', 'resource' => 'tasks', 'task' => $task]);
+		return view('add', ['resource' => 'tasks', 'task' => $task]);
     }
 
 
@@ -41,7 +41,7 @@ class TasksController extends Controller
     public function edit($id)
     {
         $task = Task::findOrFail($id);
-		return view('edit', ['action' => 'Edit', 'resource' => 'tasks', 'task' => $task, 'id' => $id]);
+		return view('edit', ['resource' => 'tasks', 'task' => $task, 'id' => $id]);
     }
 
 

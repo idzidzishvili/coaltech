@@ -25,7 +25,17 @@
             <div class="container h-100">
                 <div class="row h-100">
                     <div class="col-3 h-100 left-panel">
-                        Menu
+                        <ul>
+                            <li>
+                                <a href="{{route('tasks.index')}}">Tasks</a>
+                            </li>
+                            <li>
+                                <a href="{{route('projects.index')}}">Projects</a>
+                            </li>
+                            <li>
+                                <a href="{{route('view.tasks')}}">View tasks by projects</a>
+                            </li>
+                        </ul>
                     </div>
                     <div class="col-9">
                         <div class="content">

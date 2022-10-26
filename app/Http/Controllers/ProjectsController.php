@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectsRequest;
+use App\Models\Task;
 
 class ProjectsController extends Controller
 {
@@ -12,22 +13,24 @@ class ProjectsController extends Controller
    public function index()
    {
       $projects = Project::all();
-      return view('projects', ['pro' => $projects]);
+      return view('projects', ['projects' => $projects]);
    }
 
 
    public function create()
    {
       $project = new Project();
-      return view('add', ['action' => 'Add', 'resource' => 'projects', 'project' => $project]);
+      $tasks = Task::all();
+      return view('add', ['resource' => 'projects', 'project' => $project, 'tasks' => $tasks, 'selectedTasks' => []]);
    }
 
 
    public function store(ProjectsRequest $request)
    {
-      Project::create([
+      $project = Project::create([
          'name' => $request->name,
       ]);
+      $project->task()->attach($request->tasks);
       return redirect()->route('projects.index');
    }
 
@@ -39,16 +42,20 @@ class ProjectsController extends Controller
 
    public function edit($id)
    {
-      $task = Project::findOrFail($id);
-      return view('edit', ['action' => 'Edit', 'resource' => 'projects', 'project' => $task, 'id' => $id]);
+      $project = Project::findOrFail($id);
+      $tasks = Task::all();
+      $selectedTasks = $project->task->pluck('id')->toArray();
+      return view('edit', ['resource' => 'projects', 'project' => $project, 'tasks' => $tasks, 'selectedTasks' => $selectedTasks, 'id' => $id]);
    }
 
 
    public function update(ProjectsRequest $request, $id)
    {
-      Project::findOrFail($id)->update([
+      $project = Project::findOrFail($id);
+      $project->update([
          'name' => $request->name
       ]);
+      $project->task()->sync($request->tasks);
       return redirect()->route('projects.index');
    }
 
@@ -57,5 +64,16 @@ class ProjectsController extends Controller
    {
       Project::findOrFail($id)->delete();
       return redirect()->route('projects.index');
+   }
+
+
+   public function vewTasks(){
+      $projects = Project::all();
+      $tasks = null;
+      if(count($projects)){
+         $tasksArray = $projects[0]->task->pluck('id')->toArray();
+         $tasks = Task::whereIn('id', $tasksArray)->get();
+      }
+      return view('tasks-by-project', ['projects' => $projects, 'tasks' => $tasks]);
    }
 }

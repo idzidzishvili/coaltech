@@ -10,4 +10,13 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function task(){
+        return $this->belongsToMany(Task::class)->withTimestamps();
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('m.d.Y h:i', strtotime($value));
+    }
 }

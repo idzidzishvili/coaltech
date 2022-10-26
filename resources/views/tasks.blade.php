@@ -22,7 +22,7 @@
                         <th class="col-2">Actions</th>
                      </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="tasks">
                      @foreach ($tasks as $i=>$task)
                         <tr>
                            <td>{{$i+1}}</td>
@@ -34,10 +34,8 @@
                                  @csrf @method('delete')
                                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                               </form>
-                              {{-- <a href="#" data-toggle="modal" data-target="#deleteModal" data-id="{{$feature->id}}" data-resource="{{$resource}}">
-                                 <i class="fas fa-trash text-danger"></i>
-                              </a> --}}
                            </td>
+                           <input type="hidden" class="hfield" value="{{$i+1}}" data-id="{{$task->id}}">
                         </tr>
                      @endforeach
                   </tbody>

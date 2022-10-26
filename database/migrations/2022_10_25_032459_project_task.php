@@ -19,8 +19,8 @@ class ProjectTask extends Migration
             $table->bigInteger('project_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('task_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('project_id')->references('id')->on('tasks')->onDelete('cascade');
+            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 

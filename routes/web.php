@@ -16,4 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\TasksController::class, 'index']);
 
 Route::resource('tasks', App\Http\Controllers\TasksController::class);
+Route::get('view-tasks', [App\Http\Controllers\ProjectsController::class, 'vewTasks'])->name('view.tasks');
 Route::resource('projects', App\Http\Controllers\ProjectsController::class);
+
+Route::post('reorder-tasks', [App\Http\Controllers\AjaxController::class, 'reorderTasks']);
+Route::get('get-tasks', [App\Http\Controllers\AjaxController::class, 'getTasks']);
